@@ -6,7 +6,7 @@ A new Flutter project.
 
 This project is a starting point for a Flutter application.
 This App has add, edit, update and editView the task feature
-Delete the task, complete the task feature also
+Delete the task, complete the task feature also and search task also include.
 
 ● Implementation of MVVM architecture.
 ● Usage of GetX for state management.
