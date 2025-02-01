@@ -14,7 +14,7 @@ class TaskListController extends GetxController {
   late ResponseModel latestResponse;
 
   initialize() async {
-    latestResponse = await LocalStorage().initDB();
+    latestResponse = await LocalStorage().init();
     if (latestResponse.isOperationSuccessful) {
       getTasks();
     } else {
@@ -39,9 +39,16 @@ class TaskListController extends GetxController {
   reinitialzeState(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (latestResponse.message.isNotEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        Get.showSnackbar(GetSnackBar(
+          messageText:
+              Text(latestResponse.message, style: const TextStyle(fontFamily: "Poppins", fontSize: 11, fontWeight: FontWeight.w500, color: ColorConstants.kSecondaryColorAccent)),
+          duration: const Duration(seconds: 3),
           backgroundColor: ColorConstants.kPrimaryColor,
-          content: Text(latestResponse.message),
+          snackStyle: SnackStyle.FLOATING,
+          snackPosition: SnackPosition.BOTTOM,
+          margin: const EdgeInsets.only(left: 8, right: 8, bottom: 70),
+          borderRadius: 6.0,
+          barBlur: 3.0,
         ));
         latestResponse.message = '';
       }

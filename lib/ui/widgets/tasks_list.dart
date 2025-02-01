@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../controllers/task_bottomsheet_controller.dart';
 import '../../model/task_model.dart';
 import 'task_card.dart';
 
@@ -9,6 +11,7 @@ class TasksList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TaskBottomsheetController taskBottomsheetController = Get.put(TaskBottomsheetController());
     return Column(
       children: [
         ListView.builder(
@@ -18,7 +21,7 @@ class TasksList extends StatelessWidget {
             itemCount: tasks.length,
             itemBuilder: (context, index) => TaskCard(task: tasks[index])),
         SizedBox(
-          height: 450,
+          height: taskBottomsheetController.isBottomSheetOpened ? 450 : 100,
         ),
       ],
     );

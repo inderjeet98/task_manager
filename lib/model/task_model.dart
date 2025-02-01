@@ -6,14 +6,14 @@ List<Task> taskFromJson(String str) => List<Task>.from(json.decode(str).map((x) 
 String taskToJson(List<Task> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Task {
-  String? TaskId;
+  int? TaskId;
   String? TaskTitle;
   String? Description;
   String? Status;
   String? StartDate;
   String? EndDate;
   String? Active;
-  bool isUrgent;
+  String isUrgent;
 
   Task({
     this.TaskId,

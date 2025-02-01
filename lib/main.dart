@@ -6,6 +6,7 @@ import 'data/localstorage.dart';
 import 'ui/screens/task_screen.dart';
 
 void main() async {
+  // ignore: unused_local_variable
   LocalStorage? db = LocalStorage();
   runApp(const MyApp());
 }
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: CustomTheme.lightTheme,
       darkTheme: CustomTheme.darkTheme,
-      themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.system,
+      themeMode: ThemeMode.system,
+      // themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.system,
       home: const TaskScreen(),
     );
   }

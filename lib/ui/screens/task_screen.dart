@@ -5,6 +5,8 @@ import 'package:task_manager/core/utils/sized_box_extension.dart';
 
 import '../../core/constants/string_constants.dart';
 import '../../core/style/style_constants/color_constants.dart';
+import '../widgets/task_bottom_sheet.dart';
+import '../widgets/tasks_floating_action_button.dart';
 import '../widgets/tasks_list.dart';
 import '../widgets/tasks_screen_header.dart';
 
@@ -19,26 +21,27 @@ class _TaskScreenState extends State<TaskScreen> {
   final TaskListController _taskListController = Get.put(TaskListController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        // bottomSheet: const TasksBottomsheet(),
-        // floatingActionButton: const TasksFloatingActionButton(),
-        body: SafeArea(
-      child: SingleChildScrollView(
-        child: Column(children: [
-          buildUserInfo(),
-          GetBuilder<TaskListController>(
-              init: _taskListController,
-              builder: (newController) {
-                return buildScreenBody(newController);
-              })
-        ]),
-      ),
-    ));
+    return GetBuilder<TaskListController>(
+        init: _taskListController,
+        builder: (newController) {
+          return Scaffold(
+              bottomSheet: const TasksBottomsheet(),
+              floatingActionButton: const TasksFloatingActionButton(),
+              body: SafeArea(
+                  child: SingleChildScrollView(
+                      child: Column(children: [
+                buildUserInfo(),
+                GetBuilder<TaskListController>(
+                  init: _taskListController,
+                  builder: (newController) => buildScreenBody(newController),
+                )
+              ]))));
+        });
   }
 
   buildUserInfo() {
     return Container(
-        color: Colors.white,
+        // color: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         height: 100,
         child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -75,14 +78,7 @@ class _TaskScreenState extends State<TaskScreen> {
           );
   }
 
-  buildLoadingScreen() {
-    return const SizedBox(
-      height: 120,
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-  }
+  buildLoadingScreen() => const SizedBox(height: 120, child: Center(child: CircularProgressIndicator()));
 
   buildEmptyTasksList() {
     return Column(

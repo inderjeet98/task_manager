@@ -41,7 +41,7 @@ class LocalStorage {
       String documentsDirectory = await getDatabasesPath();
       // final path = join(documentsDirectory.path, 'TPartyMasterr.db');
       final path = join(documentsDirectory, 'task.db');
-      await openDatabase(path, version: 2, onOpen: (db) {}, onCreate: (Database db, int version) async {
+      return await openDatabase(path, version: 2, onOpen: (db) {}, onCreate: (Database db, int version) async {
         await db.execute('CREATE TABLE t_task('
             'TaskId INTEGER PRIMARY KEY,'
             'TaskTitle TEXT,'
@@ -50,8 +50,17 @@ class LocalStorage {
             'StartDate TEXT,'
             'EndDate TEXT,'
             'Active TEXT,'
+            'isUrgent TEXT'
             ')');
       });
+    } catch (e) {
+      return e;
+    }
+  }
+
+  init() async {
+    try {
+      await initDB();
       return ResponseModel(message: "", isOperationSuccessful: true);
     } catch (e) {
       return ResponseModel(message: e.toString(), isOperationSuccessful: false);
