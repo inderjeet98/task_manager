@@ -84,9 +84,24 @@ class LocalStorage {
     }
   }
 
+  Future<ResponseModel> getFilteredTasks(String? title) async {
+    try {
+      List taskList = await getFilteredTaskList(title);
+      return ResponseModel(message: "", isOperationSuccessful: true, data: taskList);
+    } catch (e) {
+      return ResponseModel(message: e.toString(), isOperationSuccessful: false);
+    }
+  }
+
   Future<List<Task>> getTaskList() async {
     var db = await database;
     final List<Map<String, dynamic>> maps = await db!.query('t_task');
+    return List.generate(maps.length, (i) => Task.fromJson(maps[i]));
+  }
+
+  Future<List<Task>> getFilteredTaskList(String? title) async {
+    var db = await database;
+    final List<Map<String, dynamic>> maps = await db!.rawQuery('SELECT * FROM t_task WHERE TaskTitle = ?', [title]);
     return List.generate(maps.length, (i) => Task.fromJson(maps[i]));
   }
 

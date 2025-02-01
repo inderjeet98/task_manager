@@ -65,4 +65,14 @@ class TaskListController extends GetxController {
       updateState(TasksListState.LOADED);
     }
   }
+
+  getFilteredTasks(searchText) async {
+    latestResponse = await LocalStorage().getFilteredTasks(searchText);
+    if (latestResponse.isOperationSuccessful) {
+      tasks = latestResponse.data;
+      updateState(TasksListState.LOADED);
+    } else {
+      updateState(TasksListState.LOADED);
+    }
+  }
 }

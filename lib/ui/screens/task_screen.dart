@@ -71,11 +71,19 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   buildTasks(TaskListController tasksListProvider) {
-    return tasksListProvider.tasks.isEmpty
-        ? buildEmptyTasksList()
-        : Column(
-            children: [TasksScreenHeader(tasksCount: tasksListProvider.tasks.length), TasksList(tasks: tasksListProvider.tasks)],
-          );
+    return Column(
+      children: [
+        TasksScreenHeader(tasksCount: tasksListProvider.tasks.length),
+        Padding(
+          padding: const EdgeInsets.all(8.0).add(const EdgeInsets.symmetric(horizontal: 12.6)).add(const EdgeInsets.only(right: 8)),
+          child: SearchBar(
+            hintText: 'Search Task Title',
+            onChanged: (value) => value.isNotEmpty ? tasksListProvider.getFilteredTasks(value) : tasksListProvider.getTasks(),
+          ),
+        ),
+        tasksListProvider.tasks.isEmpty ? buildEmptyTasksList() : TasksList(tasks: tasksListProvider.tasks)
+      ],
+    );
   }
 
   buildLoadingScreen() => const SizedBox(height: 120, child: Center(child: CircularProgressIndicator()));
