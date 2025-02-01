@@ -5,6 +5,10 @@ A new Flutter project.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
+This App has add, edit, update and editView the task feature
+Delete the task, complete the task feature also
+
+
 
 A few resources to get you started if this is your first Flutter project:
 
